@@ -1,0 +1,133 @@
+openapi: 3.0.2
+
+info:
+  title: Example API
+  description: Example API description.
+  version: 1.0.0
+
+servers:
+  - url: https://{domain}/{stage}
+    variables:
+      domain:
+        default: example.local.rocks
+      stage:
+        default: dev
+    description: This server API endpoint
+
+paths:
+  /sample/{id}:
+    get:
+      summary: Sample info
+      tags:
+        - Sample
+      parameters:
+        - name: id
+          description: |
+            The Sample ID the sample.
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Customer info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SampleResponse"
+    patch:
+      summary: Update sample data
+      tags:
+        - Samples
+      parameters:
+        - name: id
+          description: ID Sample
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+      responses:
+        "200":
+          description: Sapmle info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SampleResponse"
+
+  /sample/{id}/tokens/{token}:
+    delete:
+      summary: Delete ID token
+      tags:
+        - Sample
+      parameters:
+        - name: id
+          description: |
+            The ID the sample.
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: token
+          description: Token
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Token deleted
+
+  /samples/{id}/tokens:
+    post:
+      summary: Add token to sample
+      tags:
+        - Samples
+      parameters:
+        - $ref: "#/components/parameters/SampleId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SampleResponse"
+      responses:
+        "200":
+          description: Tariff values persisted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SampleResponse"
+
+tags:
+  - name: Samples
+
+components:
+  parameters:
+    SampleId:
+      description: The ID of the sample to be retrieved
+      name: id
+      in: path
+      example: a0T1i000006vBsMEAU
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    SampleResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "0031i000002AuucAAC"
+        description: 
+          type: string
+          example: "Descrition sample"

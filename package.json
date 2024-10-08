@@ -1,4 +1,10 @@
 {
   "name": "openapi-boilerplate",
-  "packageManager": "yarn@4.5.0"
+  "packageManager": "yarn@4.5.0",
+  "dependencies": {
+    "@openapitools/openapi-generator-cli": "^2.14.0"
+  },
+  "scripts": {
+    "generate:express": "openapi-generator-cli generate -i docs/api.yaml -g nodejs-express-server -o generated-sources/openapi --additional-properties=ngVersion=6.1.7,npmName=restClient,supportsES6=true,npmVersion=6.9.0,withInterfaces=true"
+  }
 }
